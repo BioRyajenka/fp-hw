@@ -1,16 +1,11 @@
 module Task2
-       ( randomIntList
-       , removeAt
+       ( removeAt
        , collectEvery
        , stringSum
        , mergeSort
        ) where
 
-import           System.Random (newStdGen, randomRs)
-import           Text.Read     (readMaybe)
-
-randomIntList :: Int -> Int -> Int -> IO [Int]
-randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
+import           Text.Read     (readEither)
 
 removeAt :: Int -> [a] -> (Either a String, [a])
 removeAt n x
@@ -23,10 +18,10 @@ collectEvery k list = (filter' (/=) zipped, filter' (==) zipped) where
     filter' :: (Int -> Int -> Bool) -> [(Int, a)] -> [a]
     filter' f list' = map snd $ filter (\x -> f (fst x) k) list'
 
-stringSum :: String -> Maybe Integer
-stringSum string = foldl (\acc m -> (+) <$> acc <*> m) (Just 0) nums
+stringSum :: String -> Either String Integer
+stringSum string = foldl (\acc m -> (+) <$> acc <*> m) (Right 0) nums
     where
-        nums = map (readMaybe . removePlus) $ words string
+        nums = map (readEither . removePlus) $ words string
         removePlus s = case s of
             ('+':xs) -> xs
             _        -> s
