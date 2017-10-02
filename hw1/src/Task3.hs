@@ -1,9 +1,13 @@
 module Task3
-       ( nextDay
+       ( DayOfWeek (..)
+       , nextDay
        , afterDays
        , isWeekend
        , daysToParty
 
+       , Mob
+       , Knight
+       , Creep
        , fight
 
        , Vector (..)
