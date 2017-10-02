@@ -6,8 +6,8 @@ module Task3
        , daysToParty
 
        , Mob
-       , Knight
-       , Creep
+       , Knight (..)
+       , Creep (..)
        , fight
 
        , Vector (..)
@@ -24,7 +24,7 @@ module Task3
        , tSize
        , tContains
        , tInsert
-       , tCreate
+       , fromList
        ) where
 
 import           Data.List  (elemIndex, find)
@@ -82,7 +82,7 @@ instance Mob Creep where
 
 {- Vectors -}
 
-data Vector a = Vector2D a a | Vector3D a a a
+data Vector a = Vector2D a a | Vector3D a a a deriving (Show, Eq)
 
 vecToList :: Num a => Vector a -> [a]
 vecToList (Vector2D x y)   = [x, y, 0]
@@ -114,7 +114,7 @@ vVectP _ _                                     = Nothing
 
 {- Nat -}
 
-data Nat = Z | S Nat
+data Nat = Z | S Nat deriving (Show)
 
 instance Eq Nat where
     (==) (S a) (S b) = a == b
@@ -189,5 +189,5 @@ tInsert (Node v l r) x
     | v > x     = Node v (tInsert l x) r
     | otherwise = Node v l r
 
-tCreate :: Ord a => [a] -> Tree a
-tCreate = foldl tInsert Leaf
+fromList :: Ord a => [a] -> Tree a
+fromList = foldl tInsert Leaf
