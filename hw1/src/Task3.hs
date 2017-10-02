@@ -68,13 +68,13 @@ fight fighter1 fighter2 = fight' where
           | priority  = (f1, reduceHP f2 $ getAttack f1, False)
           | otherwise = (reduceHP f1 $ getAttack f2, f2, True)
 
-data Knight = Knight {kAttack :: Int, kHP :: Int} deriving (Show)
+data Knight = Knight {kAttack :: Int, kHP :: Int} deriving (Show, Eq)
 instance Mob Knight where
     getAttack = kAttack
     getHP = kHP
     reduceHP k amount = k { kHP = max 0 (getHP k - amount) }
 
-data Creep = Creep {cAttack :: Int, cHP :: Int} deriving (Show)
+data Creep = Creep {cAttack :: Int, cHP :: Int} deriving (Show, Eq)
 instance Mob Creep where
     getAttack = cAttack
     getHP = cHP
@@ -165,7 +165,7 @@ diff Z n         = Left  n
 
 {- Binary search tree -}
 
-data Tree a = Leaf | Node a (Tree a) (Tree a)
+data Tree a = Leaf | Node a (Tree a) (Tree a) deriving (Show)
 
 tEmpty :: Tree a -> Bool
 tEmpty Leaf = True
@@ -173,7 +173,7 @@ tEmpty _    = False
 
 tSize :: Tree a -> Int
 tSize Leaf         = 0
-tSize (Node _ l r) = tSize l + tSize r
+tSize (Node _ l r) = tSize l + tSize r + 1
 
 tContains :: (Ord a) => Tree a -> a -> Bool
 tContains Leaf _ = False
