@@ -1,6 +1,6 @@
-import Test1
-import Test2
-import Test3
+import           Test1
+import           Test2
+import           Test3
 
 main :: IO ()
 main = do

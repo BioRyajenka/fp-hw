@@ -3,7 +3,9 @@ module Task4
        , joinWith
        ) where
 
-import           Task3 (Tree (..))
+import           Data.Maybe (fromMaybe)
+
+import           Task3      (Tree (..))
 
 instance Foldable Tree where
    foldr _ z Leaf               = z
@@ -18,6 +20,6 @@ splitOn delimiter = foldr f [[]] where
     f _ _ = error "this code shouldn't be executed"
 
 joinWith :: Char -> [String] -> String
-joinWith c = foldl f "" where
-    f "" xs  = xs
-    f acc xs = acc ++ [c] ++ xs
+joinWith c s = fromMaybe "" $ foldl f Nothing s where
+    f Nothing xs    = Just xs
+    f (Just acc) xs = Just (acc ++ [c] ++ xs)

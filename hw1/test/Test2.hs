@@ -1,13 +1,13 @@
 module Test2(spec) where
 
-import Test.Hspec
-import Test.QuickCheck
-import Control.Exception (evaluate)
-import Data.List(sort)
+import           Control.Exception (evaluate)
+import           Data.List         (sort)
+import           Test.Hspec
+import           Test.QuickCheck
 
-import TestLib(randomIntList, listToIO)
+import           TestLib           (listToIO, randomIntList)
 
-import Task2
+import           Task2
 
 spec :: IO ()
 spec = hspec $ do
@@ -21,13 +21,13 @@ spec = hspec $ do
     it "stringSum" $ do
         stringSum "1 1" `shouldBe` 2
         stringSum "100\n\t-3" `shouldBe` 97
-        
+
         let mustPass = [ "1", "1 2 3", " 1", "1 ", "\t1\t", "\t12345\t", "010 020 030"
                        , " 123 456 789 ", "-1", "-1 -2 -3", "\t-12345\t", " -123 -456 -789 "
                        , "\n1\t\n3   555  -1\n\n\n-5", "123\t\n\t\n\t\n321 -4 -40"
                        , "+1", "1 +1", "-1 +1", "+1 -1" ]
         let mustFail = ["asd", "1-1", "1.2", "--2", "1+", "1+1", "++1", "-+1", "+-1", "1 + 1"]
-        
+
         listToIO $ map (\x -> evaluate (stringSum x) `shouldThrow` anyException) mustFail
         listToIO $ map (\x -> stringSum x `shouldSatisfy` const True) mustPass
     it "mergeSort" $ do

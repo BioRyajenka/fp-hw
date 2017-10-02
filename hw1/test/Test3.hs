@@ -4,7 +4,7 @@ import           Control.Exception (evaluate)
 import           Test.Hspec
 import           Test.QuickCheck
 
-import TestLib(listToIO)
+import           TestLib           (listToIO)
 
 import           Task3
 
@@ -19,7 +19,7 @@ spec = hspec $ do
         it "daysToParty" $ listToIO $  zipWith shouldBe (map daysToParty [Monday ..]) [4, 3, 2, 1, 0, 6, 5]
     describe "Knights & Creeps" $ do
         it "Just fight" $ do
-            fight (Knight 3 12) (Creep 4 9) `shouldBe` (Left (Knight 3 12), 4)                
+            fight (Knight 3 12) (Creep 4 9) `shouldBe` (Left (Knight 3 12), 4)
     describe "Vectors" $ do
         it "vLength" $ do
             vLength (Vector3D 1 2 2) `shouldBe` 3
@@ -38,7 +38,7 @@ spec = hspec $ do
         it "vVectP" $ do
             vVectP (Vector3D 1 2 3) (Vector3D 3 2 1) `shouldBe` Just (Vector3D (-4) 8 (-4))
             vVectP (Vector3D 1 2 3) (Vector2D 3 2) `shouldBe` Nothing
-            
+
     describe "Nat" $ do
         it "Eq" $ do
             Z `shouldBe` Z
@@ -50,7 +50,7 @@ spec = hspec $ do
         it "Num" $ do
             Z + Z `shouldBe` Z
             Z + S Z `shouldBe` S Z
-            S Z + Z `shouldBe` S Z 
+            S Z + Z `shouldBe` S Z
     describe "Binary search tree" $ do
         it "tEmpty" $ do
             tEmpty (fromList [1]) `shouldBe` False
