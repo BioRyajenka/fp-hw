@@ -8,8 +8,8 @@ module Task1
 import           Control.Monad (join)
 import           Data.List     (sort)
 
-order3 :: (Ord a) => (a, a, a) -> [a]
-order3 (a, b, c) = sort [a, b, c]
+order3 :: (Ord a) => (a, a, a) -> (a, a, a)
+order3 (a, b, c) = (\[a', b', c'] -> (a', b', c')) $ sort [a, b, c]
 
 highestBit :: Int -> (Int, Int)
 highestBit treshold' = gen treshold' 1 1 where
