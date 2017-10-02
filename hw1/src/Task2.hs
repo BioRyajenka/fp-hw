@@ -5,11 +5,11 @@ module Task2
        , mergeSort
        ) where
 
-import           Text.Read     (readEither)
+--import           Text.Read     (readEither)
 
 removeAt :: Int -> [a] -> (Maybe a, [a])
 removeAt n x
-    | length x < n = (Just (x!!n), take n x ++ drop (n + 1) x)
+    | n < length x = (Just (x!!n), take n x ++ drop (n + 1) x)
     | otherwise    = (Nothing, x)
 
 collectEvery :: Int -> [a] -> ([a], [a])
@@ -18,10 +18,10 @@ collectEvery k list = (filter' (/=) zipped, filter' (==) zipped) where
     filter' :: (Int -> Int -> Bool) -> [(Int, a)] -> [a]
     filter' f list' = map snd $ filter (\x -> f (fst x) k) list'
 
-stringSum :: String -> Either String Integer
-stringSum string = foldl (\acc m -> (+) <$> acc <*> m) (Right 0) nums
+stringSum :: String -> Integer
+stringSum string = sum nums
     where
-        nums = map (readEither . removePlus) $ words string
+        nums = map (read . removePlus) $ words string
         removePlus s = case s of
             ('+':xs) -> xs
             _        -> s
