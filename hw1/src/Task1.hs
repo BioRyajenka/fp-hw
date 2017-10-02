@@ -1,8 +1,12 @@
-module Main where
+module Task1
+       ( order3
+       , highestBit
+       , smartReplicate
+       , contains
+       ) where
 
--- import Lib
-import Data.List
-import Control.Monad
+import Data.List(sort)
+import Control.Monad(join)
 
 order3 :: (Ord a) => (a, a, a) -> [a]
 order3 (a, b, c) = sort [a, b, c]
@@ -26,6 +30,3 @@ smartReplicate = concatMap $ join replicate
 
 contains :: Eq a => a -> [[a]] -> [[a]]
 contains val = filter $ elem val
-
-main :: IO ()
-main = return ()

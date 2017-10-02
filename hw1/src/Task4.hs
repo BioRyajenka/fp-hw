@@ -1,6 +1,9 @@
-module Task4 where
+module Task4
+       ( splitOn
+       , joinWith
+       ) where
 
-import Task3
+import Task3(Tree (..))
 
 instance Foldable Tree where
    foldr _ z Leaf = z

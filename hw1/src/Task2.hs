@@ -1,7 +1,13 @@
-module Main where
+module Task2
+       ( randomIntList
+       , removeAt
+       , collectEvery
+       , stringSum
+       , mergeSort
+       ) where
 
-import Text.Read
-import           System.Random (newStdGen, randomRs)
+import Text.Read(readMaybe)
+import System.Random (newStdGen, randomRs)
 
 randomIntList :: Int -> Int -> Int -> IO [Int]
 randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
@@ -35,6 +41,3 @@ mergeSort list = merge (mergeSort $ leftHalf list) (mergeSort $ rightHalf list) 
     merge xs ys  = xs ++ ys
     leftHalf xs  = take (length xs `div` 2) xs
     rightHalf xs = drop (length xs `div` 2) xs
-
-main :: IO ()
-main = return ()

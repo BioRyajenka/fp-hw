@@ -20,7 +20,7 @@ module Task3
        , tInsert
        , tCreate
        ) where
---import Control.Arrow
+
 import Data.Maybe(fromJust)
 import Data.List(elemIndex, find)
 
@@ -50,16 +50,17 @@ class Mob a where
     reduceHP :: a -> Int -> a
 
 fight :: (Mob a, Mob b) => a -> b -> (Either a b, Int)
-fight fighter1 fighter2 = (case lastStep of
-    (_, winner, True)  -> (Right fighter2, getHP winner)
-    (winner, _, False) -> (Left fighter1, getHP winner)) where
-        steps = iterate doStep (fighter1, fighter2, True)
-        lastStep = fromJust $ find (\(f1, f2, _) -> getHP f1 == 0 || getHP f2 == 0) steps
-        
-        doStep :: (Mob a, Mob b) => (a, b, Bool) -> (a, b, Bool)
-        doStep (f1, f2, priority)
-            | priority  = (f1, reduceHP f2 $ getAttack f1, False)
-            | otherwise = (reduceHP f1 $ getAttack f2, f2, True)
+fight fighter1 fighter2 = fight' where
+      fight' = case lastStep of
+          (_, winner, True)  -> (Right fighter2, getHP winner)
+          (winner, _, False) -> (Left fighter1, getHP winner)
+      steps = iterate doStep (fighter1, fighter2, True)
+      lastStep = fromJust $ find (\(f1, f2, _) -> getHP f1 == 0 || getHP f2 == 0) steps
+      
+      doStep :: (Mob a, Mob b) => (a, b, Bool) -> (a, b, Bool)
+      doStep (f1, f2, priority)
+          | priority  = (f1, reduceHP f2 $ getAttack f1, False)
+          | otherwise = (reduceHP f1 $ getAttack f2, f2, True)
 
 data Knight = Knight {kAttack :: Int, kHP :: Int} deriving (Show)
 instance Mob Knight where
@@ -85,9 +86,10 @@ vLength :: Real a => Vector a -> Float
 vLength v = sqrt $ sum $ map ((^^(2::Int)) . realToFrac) $ vecToList v
 
 vSum :: Num a => Vector a -> Vector a -> Vector a
-vSum a b = (case (a, b) of 
-    (Vector2D _ _, Vector2D _ _) -> Vector2D (head res) (res!!1)
-    _                            -> Vector3D (head res) (res!!1) (res!!2)) where
+vSum a b = vSum' where
+    vSum' = case (a, b) of 
+        (Vector2D _ _, Vector2D _ _) -> Vector2D (head res) (res!!1)
+        _                            -> Vector3D (head res) (res!!1) (res!!2)
     res = zipWith (+) (vecToList a) (vecToList b)
 
 vScalP :: Num a => Vector a -> Vector a -> a

@@ -1,10 +1,15 @@
-module Task5 where
+module Task5
+       ( maybeConcat
+       , eitherConcat
+       , NonEmpty
+       , Identity (..)
+       ) where
 
 import Data.Maybe(fromJust)
 import Data.Either(lefts, rights)
 import Data.Semigroup(Semigroup, (<>))
 
-import Task3
+import Task3(Tree (..), tInsert)
 
 {- 1 -}
 
