@@ -1,6 +1,5 @@
 module Test4 where
 
-import           Control.Exception (evaluate)
 import           Test.Hspec
 import           Test.QuickCheck
 

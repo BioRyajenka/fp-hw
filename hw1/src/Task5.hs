@@ -1,7 +1,7 @@
 module Task5
        ( maybeConcat
        , eitherConcat
-       , NonEmpty
+       , NonEmpty (..)
        , Identity (..)
        ) where
 
@@ -22,7 +22,7 @@ eitherConcat xs = (mconcat $ lefts xs, mconcat $ rights xs)
 
 {- 2 -}
 
-data NonEmpty a = a :| [a] deriving (Show)
+data NonEmpty a = a :| [a] deriving (Show, Eq)
 
 instance Semigroup (NonEmpty a) where
     (a :| as) <> (b :| bs) = a :| (as ++ b : bs)
@@ -32,7 +32,7 @@ sconcat (a :| as) = f a as where
     f b (c:cs) = b <> f c cs
     f b _      = b-}
 
-newtype Identity a = Identity { runIdentity :: a } deriving (Show)
+newtype Identity a = Identity { runIdentity :: a } deriving (Show, Eq)
 instance (Monoid a) => Monoid (Identity a) where
     mempty                            = Identity mempty
     mappend (Identity a) (Identity b) = Identity (mappend a b)
