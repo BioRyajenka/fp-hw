@@ -7,10 +7,10 @@ module Task2
 
 import           Text.Read     (readEither)
 
-removeAt :: Int -> [a] -> (Either a String, [a])
+removeAt :: Int -> [a] -> (Maybe a, [a])
 removeAt n x
-    | length x < n = (Left (x!!n), take n x ++ drop (n + 1) x)
-    | otherwise    = (Right "There is no such element", x)
+    | length x < n = (Just (x!!n), take n x ++ drop (n + 1) x)
+    | otherwise    = (Nothing, x)
 
 collectEvery :: Int -> [a] -> ([a], [a])
 collectEvery k list = (filter' (/=) zipped, filter' (==) zipped) where
