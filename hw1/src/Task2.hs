@@ -23,8 +23,9 @@ stringSum string = sum nums
     where
         nums = map (read . removePlus) $ words string
         removePlus s = case s of
-            ('+':xs) -> xs
-            _        -> s
+            ('+':'-':_) -> error "Can't parse"
+            ('+':xs)    -> xs
+            _           -> s
 
 mergeSort :: Ord a => [a] -> [a]
 mergeSort []   = []
