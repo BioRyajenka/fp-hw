@@ -3,16 +3,16 @@ module Task4
        , joinWith
        ) where
 
-import Task3(Tree (..))
+import           Task3 (Tree (..))
 
 instance Foldable Tree where
-   foldr _ z Leaf = z
+   foldr _ z Leaf               = z
    foldr f z (Node v Leaf Leaf) = f v z
-   foldr f z (Node v l r) = foldr f (f v (foldr f z r)) l
+   foldr f z (Node v l r)       = foldr f (f v (foldr f z r)) l
 
 splitOn :: Char -> String -> [String]
 splitOn delimiter = foldr f [[]] where
-    f c l@(x:xs) 
+    f c l@(x:xs)
         | c == delimiter = []:l
         | otherwise      = (c:x):xs
     f _ _ = error "this code shouldn't be executed"

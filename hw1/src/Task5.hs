@@ -5,11 +5,11 @@ module Task5
        , Identity (..)
        ) where
 
-import Data.Maybe(fromJust)
-import Data.Either(lefts, rights)
-import Data.Semigroup(Semigroup, (<>))
+import           Data.Either    (lefts, rights)
+import           Data.Maybe     (fromJust)
+import           Data.Semigroup (Semigroup, (<>))
 
-import Task3(Tree (..), tInsert)
+import           Task3          (Tree (..), tInsert)
 
 {- 1 -}
 
@@ -26,7 +26,7 @@ data NonEmpty a = a :| [a] deriving (Show)
 
 instance Semigroup (NonEmpty a) where
     (a :| as) <> (b :| bs) = a :| (as ++ b : bs)
- 
+
 {-sconcat :: Semigroup a => NonEmpty a -> a
 sconcat (a :| as) = f a as where
     f b (c:cs) = b <> f c cs

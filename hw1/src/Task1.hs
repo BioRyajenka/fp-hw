@@ -5,8 +5,8 @@ module Task1
        , contains
        ) where
 
-import Data.List(sort)
-import Control.Monad(join)
+import           Control.Monad (join)
+import           Data.List     (sort)
 
 order3 :: (Ord a) => (a, a, a) -> [a]
 order3 (a, b, c) = sort [a, b, c]
@@ -20,7 +20,7 @@ highestBit treshold' = gen treshold' 1 1 where
 {-
 highestBit :: Int -> (Int, Int)
 highestBit treshold = maximum $ map mapfunction [1..] where
-    mapfunction i 
+    mapfunction i
         | 2^i <= treshold = (2 ^ i, i)
         | otherwise       = (0, 0)
 -}

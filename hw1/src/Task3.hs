@@ -3,16 +3,16 @@ module Task3
        , afterDays
        , isWeekend
        , daysToParty
-       
+
        , fight
-       
+
        , Vector (..)
        , vLength
        , vSum
        , vDist
        , vScalP
        , vVectP
-       
+
        , Tree (..)
        , tEmpty
        , tSize
@@ -21,8 +21,8 @@ module Task3
        , tCreate
        ) where
 
-import Data.Maybe(fromJust)
-import Data.List(elemIndex, find)
+import           Data.List  (elemIndex, find)
+import           Data.Maybe (fromJust)
 
 {- Days Of Week -}
 
@@ -44,7 +44,7 @@ daysToParty startDay = fromJust $ elemIndex Friday $ iterate nextDay startDay
 
 {- Knights & Creeps -}
 
-class Mob a where 
+class Mob a where
     getAttack :: a -> Int
     getHP :: a -> Int
     reduceHP :: a -> Int -> a
@@ -56,7 +56,7 @@ fight fighter1 fighter2 = fight' where
           (winner, _, False) -> (Left fighter1, getHP winner)
       steps = iterate doStep (fighter1, fighter2, True)
       lastStep = fromJust $ find (\(f1, f2, _) -> getHP f1 == 0 || getHP f2 == 0) steps
-      
+
       doStep :: (Mob a, Mob b) => (a, b, Bool) -> (a, b, Bool)
       doStep (f1, f2, priority)
           | priority  = (f1, reduceHP f2 $ getAttack f1, False)
@@ -87,7 +87,7 @@ vLength v = sqrt $ sum $ map ((^^(2::Int)) . realToFrac) $ vecToList v
 
 vSum :: Num a => Vector a -> Vector a -> Vector a
 vSum a b = vSum' where
-    vSum' = case (a, b) of 
+    vSum' = case (a, b) of
         (Vector2D _ _, Vector2D _ _) -> Vector2D (head res) (res!!1)
         _                            -> Vector3D (head res) (res!!1) (res!!2)
     res = zipWith (+) (vecToList a) (vecToList b)
@@ -123,7 +123,7 @@ instance Ord Nat where
 instance Num Nat where
     (+) Z y     = y
     (+) (S k) y = S (k + y)
-    
+
     (*) Z _     = Z
     (*) (S k) y = y + k * y
 
@@ -134,7 +134,7 @@ instance Num Nat where
 
     negate _ = raiseNegException
 
-    fromInteger n 
+    fromInteger n
         | n < 0     = raiseNegException
         | n > 0     = S $ fromInteger $ n - 1
         | otherwise = Z
@@ -146,7 +146,7 @@ raiseNegException = error "Natural numbers can't be negative"
 evenNat Z     = True
 evenNat (S x) = not $ evenNat x
 
-divNat = 
+divNat =
 
 instance Integral Nat where
     quotRem n m = either (const (0, n)) (\x -> first S (quotRem x m)) (diff n m)
@@ -178,10 +178,10 @@ tContains (Node v l r) x
 
 tInsert :: (Ord a) => Tree a -> a -> Tree a
 tInsert Leaf x = Node x Leaf Leaf
-tInsert (Node v l r) x 
+tInsert (Node v l r) x
     | v < x     = Node v l (tInsert r x)
     | v > x     = Node v (tInsert l x) r
     | otherwise = Node v l r
 
 tCreate :: Ord a => [a] -> Tree a
-tCreate = foldl tInsert Leaf 
+tCreate = foldl tInsert Leaf
