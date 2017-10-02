@@ -17,6 +17,8 @@ module Task3
        , vScalP
        , vVectP
 
+       , Nat (..)
+
        , Tree (..)
        , tEmpty
        , tSize
