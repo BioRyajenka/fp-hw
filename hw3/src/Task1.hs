@@ -8,11 +8,14 @@ import           Control.Monad.Reader
 import qualified Data.Map             as Map
 
 data Expr =
-    Var String
+    Lit Integer
+  | Var String
   | Expr `Add` Expr
+  | Expr `Sub` Expr
   | Expr `Mul` Expr
   | Expr `Div` Expr
   | Let String Expr Expr
+  deriving (Show)
 
 data ArithmeticError = ArithmeticError
 
@@ -23,8 +26,10 @@ maybeToEither e Nothing  = Left e
 exec :: Expr -> Reader (Map.Map String Integer) (Either ArithmeticError Integer)
 exec expr = reader $ \varsMap -> execWithMap varsMap expr where
     execWithMap :: Map.Map String Integer -> Expr -> Either ArithmeticError Integer
+    execWithMap _ (Lit int) = Right int
     execWithMap varsMap (Var varname) = maybeToEither ArithmeticError $ Map.lookup varname varsMap
     execWithMap varsMap (a `Add` b) = fmap (+) (execWithMap varsMap a) <*> execWithMap varsMap b
+    execWithMap varsMap (a `Sub` b) = fmap (-) (execWithMap varsMap a) <*> execWithMap varsMap b
     execWithMap varsMap (a `Mul` b) = fmap (*) (execWithMap varsMap a) <*> execWithMap varsMap b
     execWithMap varsMap (a `Div` b) = fmap quot (execWithMap varsMap a) <*> execWithMap varsMap b
     execWithMap varsMap (Let varname what inwhere) =
